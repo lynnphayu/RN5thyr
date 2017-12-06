@@ -5,11 +5,11 @@ import { NavigationActions } from "react-navigation";
 const routes = [
 	{
 		route: "Home",
-		caption: "Home",
+		caption: "Actives",
 	},
 	{
 		route: "BlankPage",
-		caption: "Blank Page",
+		caption: "Contacts",
 	},
 	{
 		route: "Entry",
@@ -19,8 +19,9 @@ const routes = [
 
 export interface Props {
 	navigation: any;
+	partialDisconnect: Function;
 }
-export interface State {}
+export interface State { }
 const resetAction = NavigationActions.reset({
 	index: 0,
 	actions: [NavigationActions.navigate({ routeName: "Entry" })],
@@ -33,20 +34,21 @@ export default class Sidebar extends React.Component<Props, State> {
 					<List
 						style={{ marginTop: 40 }}
 						dataArray={routes}
-						renderRow={data => {
+						renderRow={
+							data => {
 							return (
-								<ListItem
-									button
+								<ListItem button
 									onPress={() => {
-										data.route === "Entry"
-											? this.props.navigation.dispatch(resetAction)
-											: this.props.navigation.navigate(data.route);
-									}}
-								>
+										if(data.route === "Entry"){
+											this.props.navigation.dispatch(resetAction);
+											this.props.partialDisconnect();
+										}
+										else this.props.navigation.navigate(data.route);
+										}}>
 									<Text>{data.caption}</Text>
 								</ListItem>
-							);
-						}}
+									);}
+								}
 					/>
 				</Content>
 			</Container>

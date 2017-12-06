@@ -4,11 +4,11 @@ import { NavigationActions } from "react-navigation";
 const routes = [
     {
         route: "Home",
-        caption: "Home",
+        caption: "Actives",
     },
     {
         route: "BlankPage",
-        caption: "Blank Page",
+        caption: "Contacts",
     },
     {
         route: "Entry",
@@ -25,9 +25,12 @@ export default class Sidebar extends React.Component {
             React.createElement(Content, null,
                 React.createElement(List, { style: { marginTop: 40 }, dataArray: routes, renderRow: data => {
                         return (React.createElement(ListItem, { button: true, onPress: () => {
-                                data.route === "Entry"
-                                    ? this.props.navigation.dispatch(resetAction)
-                                    : this.props.navigation.navigate(data.route);
+                                if (data.route === "Entry") {
+                                    this.props.navigation.dispatch(resetAction);
+                                    this.props.partialDisconnect();
+                                }
+                                else
+                                    this.props.navigation.navigate(data.route);
                             } },
                             React.createElement(Text, null, data.caption)));
                     } }))));

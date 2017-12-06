@@ -1,8 +1,9 @@
 import { combineReducers } from "redux";
-import { reducer as formReducer } from "redux-form";
+// import socketActionReducer from "../socketUtil/socketActionReducer";
 import homeReducer from "../container/HomeContainer/reducer";
+import chatReducer from "../container/ChatSceneContainer/reducer";
 export default combineReducers({
-    form: formReducer,
     homeReducer,
+    chatReducer
 });
 //# sourceMappingURL=index.js.map

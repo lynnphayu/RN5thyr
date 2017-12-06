@@ -1,14 +1,23 @@
 const initialState = {
     list: [],
     isLoading: true,
+    client_id: '',
+    client_socket_is: ''
 };
 export default function (state = initialState, action) {
-    if (action.type === "FETCH_LIST_SUCCESS") {
-        return Object.assign({}, state, { list: action.list });
+    switch (action.type) {
+        case "CONNCETED_OK_ATTACHED_WITH_CLIENT_LIST":
+            return Object.assign({}, state, { isLoading: false, list: action.data });
+        case "SET_CLIENT_ID":
+            return Object.assign({}, state, { client_id: action.id });
+        case "A_CLIENT_CONNECT":
+            return Object.assign({}, state, { list: action.data });
+        case "MESSAGE_RECEIVE":
+            state.list.forEach(element => { if (element.id === action.message[0].user._id)
+                element.new_msg++; });
+            return Object.assign({}, state, { list: Object.assign([], state.list) });
+        default:
+            return state;
     }
-    if (action.type === "LIST_IS_LOADING") {
-        return Object.assign({}, state, { isLoading: action.isLoading });
-    }
-    return state;
 }
 //# sourceMappingURL=reducer.js.map
